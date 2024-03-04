@@ -1,93 +1,62 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using TaskListApp.Data;
-using TaskListApp.Models;
+﻿using MediatR;
 using TaskListApp.Models.User;
+using TaskListApp.Queries;
+using TaskListApp.Commands;
 
 namespace TaskListApp.Services
 {
     public class UserService : IUserService
     {
-        private readonly ApplicationDbContext _context;
-        private readonly AuthenticationService _authenticationService;
+        private readonly IMediator _mediator;
 
-        public UserService(ApplicationDbContext context, AuthenticationService authenticationService)
+        public UserService(IMediator mediator)
         {
-            _context = context;
-            _authenticationService = authenticationService;
+            _mediator = mediator;
         }
 
-        public async Task<User> RegisterAsync(UserDto userDto)
+        public async Task<User> RegisterAsync(User userDto)
         {
-            var user = new User
+            var command = new RegisterUserCommand
             {
                 Name = userDto.Name,
                 Email = userDto.Email,
-                PasswordHash = userDto.Password
+                Password = userDto.PasswordHash
             };
-
-            var token = _authenticationService.GenerateJwtToken(user);
-
-            user.Token = token;
-
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-
-            return user;
+            return await _mediator.Send(command);
         }
 
         public async Task<User> LoginAsync(LoginDto loginDto)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(u => u.Email == loginDto.Email);
-            if (user == null || user.PasswordHash != loginDto.Password)
+            var query = new LoginQuery
             {
-                throw new Exception("Invalid credentials");
-            }
-
-            return user;
+                Email = loginDto.Email,
+                Password = loginDto.Password
+            };
+            return await _mediator.Send(query);
         }
 
         public async Task<User> GetUserByIdAsync(int id)
         {
-            await _authenticationService.EnsureTokenIsValidAsync();
-
-            var user = await _context.Users.FindAsync(id);
-            return user;
+            var query = new GetUserByIdQuery { Id = id };
+            return await _mediator.Send(query);
         }
 
         public async Task<User> UpdateUserAsync(int id, UserDto userDto)
         {
-            await _authenticationService.EnsureTokenIsValidAsync();
-
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
+            var command = new UpdateUserCommand
             {
-                throw new Exception("User not found");
-            }
-
-            user.Name = userDto.Name;
-            user.Email = userDto.Email;
-
-            await _context.SaveChangesAsync();
-
-            return user;
+                Id = id,
+                Name = userDto.Name,
+                Email = userDto.Email,
+                Password = userDto.Password
+            };
+            return await _mediator.Send(command);
         }
 
         public async Task DeleteUser(int id)
         {
-            await _authenticationService.EnsureTokenIsValidAsync();
-
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
-            {
-                throw new Exception("User not found");
-            }
-
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
+            var command = new DeleteUserCommand { Id = id };
+            await _mediator.Send(command);
         }
     }
 }

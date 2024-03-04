@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using TaskListApp.Commands;
 using TaskListApp.Models.User;
+using TaskListApp.Queries;
 using TaskListApp.Services;
 
 namespace TaskListApp.Controllers
@@ -8,19 +11,19 @@ namespace TaskListApp.Controllers
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly IMediator _mediator;
 
-        public UserController(IUserService userService)
+        public UserController(IMediator mediator)
         {
-            _userService = userService;
+            _mediator = mediator;
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(UserDto userDto)
+        public async Task<IActionResult> Register(RegisterUserCommand command)
         {
             try
             {
-                var user = await _userService.RegisterAsync(userDto);
+                var user = await _mediator.Send(command);
                 return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);
             }
             catch (Exception ex)
@@ -30,11 +33,11 @@ namespace TaskListApp.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginDto loginDto)
+        public async Task<IActionResult> Login(LoginQuery query)
         {
             try
             {
-                var user = await _userService.LoginAsync(loginDto);
+                var user = await _mediator.Send(query);
                 return Ok(user);
             }
             catch (Exception ex)
@@ -46,20 +49,24 @@ namespace TaskListApp.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById(int id)
         {
-            var user = await _userService.GetUserByIdAsync(id);
+            var query = new GetUserByIdQuery { Id = id };
+            var user = await _mediator.Send(query);
+
             if (user == null)
             {
                 return NotFound();
             }
+
             return Ok(user);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(int id, UserDto userDto)
+        public async Task<IActionResult> UpdateUser(int id, UpdateUserCommand command)
         {
             try
             {
-                var updatedUser = await _userService.UpdateUserAsync(id, userDto);
+                command.Id = id;
+                var updatedUser = await _mediator.Send(command);
                 return Ok(updatedUser);
             }
             catch (Exception ex)
@@ -73,7 +80,8 @@ namespace TaskListApp.Controllers
         {
             try
             {
-                await _userService.DeleteUser(id);
+                var command = new DeleteUserCommand { Id = id };
+                await _mediator.Send(command);
                 return NoContent();
             }
             catch (Exception ex)

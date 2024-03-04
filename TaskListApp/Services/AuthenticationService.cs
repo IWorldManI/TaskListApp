@@ -39,7 +39,7 @@ namespace TaskListApp.Services
             return tokenString;
         }
 
-        public async Task EnsureTokenIsValidAsync()
+        public void EnsureTokenIsValid()
         {
             var token = _httpContextAccessor.HttpContext?.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
             if (string.IsNullOrEmpty(token))
