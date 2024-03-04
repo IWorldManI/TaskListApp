@@ -42,8 +42,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining(typeof(Program)));
 
-builder.Services.AddTransient<IUserService, UserService>();
-
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddSingleton<AuthenticationService>();
