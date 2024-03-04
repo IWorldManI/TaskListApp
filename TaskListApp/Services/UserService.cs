@@ -90,5 +90,32 @@ namespace TaskListApp.Services
 
             return user;
         }
+        public async Task<IEnumerable<User>> GetUsersAsync(int page = 1, int pageSize = 10, string nameFilter = null, string sortBy = null, string sortDirection = "asc")
+        {
+            IQueryable<User> usersQuery = _context.Users;
+
+            if (!string.IsNullOrEmpty(nameFilter))
+            {
+                usersQuery = usersQuery.Where(u => u.Name.Contains(nameFilter));
+            }
+
+            if (!string.IsNullOrEmpty(sortBy))
+            {
+                if (sortBy.ToLower() == "name")
+                {
+                    usersQuery = sortDirection.ToLower() == "asc"
+                        ? usersQuery.OrderBy(u => u.Name)
+                        : usersQuery.OrderByDescending(u => u.Name);
+                }
+            }
+
+            if (page > 0 && pageSize > 0)
+            {
+                usersQuery = usersQuery.Skip((page - 1) * pageSize)
+                                       .Take(pageSize);
+            }
+
+            return await usersQuery.ToListAsync();
+        }
     }
 }

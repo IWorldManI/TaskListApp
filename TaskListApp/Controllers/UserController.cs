@@ -1,9 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TaskListApp.Commands;
-using TaskListApp.Models.User;
 using TaskListApp.Queries;
-using TaskListApp.Services;
 
 namespace TaskListApp.Controllers
 {
@@ -16,6 +14,22 @@ namespace TaskListApp.Controllers
         public UserController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetUsers([FromQuery] int page = 1, [FromQuery] int pageSize = 10, [FromQuery] string nameFilter = null, [FromQuery] string sortBy = null, [FromQuery] string sortDirection = "asc")
+        {
+            var query = new GetUsersQuery
+            {
+                Page = page,
+                PageSize = pageSize,
+                Name = nameFilter,
+                SortBy = sortBy,
+                SortDirection = sortDirection
+            };
+
+            var users = await _mediator.Send(query);
+            return Ok(users);
         }
 
         [HttpPost("register")]
