@@ -1,19 +1,20 @@
 ﻿using MediatR;
-using TaskListApp.Data;
-using TaskListApp.Models.User;
 using TaskListApp.Commands;
+using TaskListApp.Models.User;
 using TaskListApp.Services;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace TaskListApp.Handlers
 {
     public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, User>
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IUserService _userService;
         private readonly AuthenticationService _authenticationService;
 
-        public DeleteUserCommandHandler(ApplicationDbContext context, AuthenticationService authenticationService)
+        public DeleteUserCommandHandler(IUserService userService, AuthenticationService authenticationService)
         {
-            _context = context;
+            _userService = userService;
             _authenticationService = authenticationService;
         }
 
@@ -21,16 +22,7 @@ namespace TaskListApp.Handlers
         {
             _authenticationService.EnsureTokenIsValid();
 
-            var user = await _context.Users.FindAsync(request.Id);
-            if (user == null)
-            {
-                throw new Exception("User not found");
-            }
-
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
-
-            return user;
+            return await _userService.DeleteUserAsync(request);
         }
     }
 }

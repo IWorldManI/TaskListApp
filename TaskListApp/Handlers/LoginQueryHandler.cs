@@ -1,29 +1,24 @@
 ﻿using MediatR;
-using TaskListApp.Data;
-using Microsoft.EntityFrameworkCore;
 using TaskListApp.Models.User;
 using TaskListApp.Queries;
+using TaskListApp.Services;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace TaskListApp.Handlers
 {
     public class LoginQueryHandler : IRequestHandler<LoginQuery, User>
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IUserService _userService;
 
-        public LoginQueryHandler(ApplicationDbContext context)
+        public LoginQueryHandler(IUserService userService)
         {
-            _context = context;
+            _userService = userService;
         }
 
         public async Task<User> Handle(LoginQuery request, CancellationToken cancellationToken)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(u => u.Email == request.Email);
-            if (user == null || user.PasswordHash != request.Password)
-            {
-                throw new Exception("Invalid credentials");
-            }
-
-            return user;
+            return await _userService.LoginAsync(request);
         }
     }
 }

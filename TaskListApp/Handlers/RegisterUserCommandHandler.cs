@@ -8,32 +8,16 @@ namespace TaskListApp.Handlers
 {
     public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, User>
     {
-        private readonly ApplicationDbContext _context;
-        private readonly AuthenticationService _authenticationService;
+        private readonly IUserService _userService;
 
-        public RegisterUserCommandHandler(ApplicationDbContext context, AuthenticationService authenticationService)
+        public RegisterUserCommandHandler(IUserService userService)
         {
-            _context = context;
-            _authenticationService = authenticationService;
+            _userService = userService;
         }
 
         public async Task<User> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
-            var user = new User
-            {
-                Name = request.Name,
-                Email = request.Email,
-                PasswordHash = request.Password
-            };
-
-            var token = _authenticationService.GenerateJwtToken(user);
-
-            user.Token = token;
-
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-
-            return user;
+            return await _userService.RegisterAsync(request);
         }
     }
 }

@@ -8,12 +8,12 @@ namespace TaskListApp.Handlers
 {
     public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, User>
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IUserService _userService;
         private readonly AuthenticationService _authenticationService;
 
-        public GetUserByIdQueryHandler(ApplicationDbContext context, AuthenticationService authenticationService)
+        public GetUserByIdQueryHandler(IUserService userService, AuthenticationService authenticationService)
         {
-            _context = context;
+            _userService = userService;
             _authenticationService = authenticationService;
         }
 
@@ -21,8 +21,7 @@ namespace TaskListApp.Handlers
         {
             _authenticationService.EnsureTokenIsValid();
 
-            var user = await _context.Users.FindAsync(request.Id);
-            return user;
+            return await _userService.GetUserByIdAsync(request);
         }
     }
 }
