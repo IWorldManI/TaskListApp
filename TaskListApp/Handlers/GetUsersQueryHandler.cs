@@ -20,13 +20,7 @@ namespace TaskListApp.Handlers
         {
             _authenticationService.EnsureTokenIsValid();
 
-            int pageNumber = request.Page;
-            int pageSize = request.PageSize;
-            string nameFilter = request.Name;
-            string sortBy = request.SortBy;
-            string sortDirection = request.SortDirection;
-
-            return await _userService.GetUsersAsync(pageNumber, pageSize, nameFilter, sortBy, sortDirection);
+            return await _userService.GetUsersAsync(request);
         }
     }
 }

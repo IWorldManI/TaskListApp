@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using TaskListApp.Commands;
 using TaskListApp.Data;
 using TaskListApp.Models.User;
@@ -90,9 +91,16 @@ namespace TaskListApp.Services
 
             return user;
         }
-        public async Task<IEnumerable<User>> GetUsersAsync(int page = 1, int pageSize = 10, string nameFilter = null, string sortBy = null, string sortDirection = "asc")
+
+        public async Task<IEnumerable<User>> GetUsersAsync(GetUsersQuery request)
         {
             IQueryable<User> usersQuery = _context.Users;
+
+            int page = request.Page;
+            int pageSize = request.PageSize;
+            string nameFilter = request.Name;
+            string sortBy = request.SortBy;
+            string sortDirection = request.SortDirection;
 
             if (!string.IsNullOrEmpty(nameFilter))
             {

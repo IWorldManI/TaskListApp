@@ -11,6 +11,6 @@ namespace TaskListApp.Services
         Task<User> GetUserByIdAsync(GetUserByIdQuery id);
         Task<User> UpdateUserAsync(UpdateUserCommand command);
         Task<User> DeleteUserAsync(DeleteUserCommand command);
-        Task<IEnumerable<User>> GetUsersAsync(int page = 1, int pageSize = 10, string nameFilter = null, string sortBy = null, string sortDirection = "asc");
+        Task<IEnumerable<User>> GetUsersAsync(GetUsersQuery command);
     }
 }
