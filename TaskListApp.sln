@@ -5,7 +5,9 @@ VisualStudioVersion = 17.7.34202.233
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskListApp", "TaskListApp\TaskListApp.csproj", "{73C2A82C-78D8-400B-8864-51B2D499A87C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskListApp.Tests", "TaskListApp.Tests\TaskListApp.Tests.csproj", "{C8FCEA08-04EE-409A-BD51-4DD46B58888C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskListApp.Tests", "TaskListApp.Tests\TaskListApp.Tests.csproj", "{C8FCEA08-04EE-409A-BD51-4DD46B58888C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskListApp.Database", "TaskListApp.Database\TaskListApp.Database.csproj", "{A24464FD-501E-456F-9E74-E357A76A7198}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{C8FCEA08-04EE-409A-BD51-4DD46B58888C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8FCEA08-04EE-409A-BD51-4DD46B58888C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8FCEA08-04EE-409A-BD51-4DD46B58888C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A24464FD-501E-456F-9E74-E357A76A7198}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A24464FD-501E-456F-9E74-E357A76A7198}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A24464FD-501E-456F-9E74-E357A76A7198}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A24464FD-501E-456F-9E74-E357A76A7198}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

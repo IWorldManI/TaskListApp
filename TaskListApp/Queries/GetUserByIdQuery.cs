@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using TaskListApp.Models.User;
+using TaskListApp.Database.Models.User;
 
 namespace TaskListApp.Queries
 {

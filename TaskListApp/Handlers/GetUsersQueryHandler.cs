@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using TaskListApp.Queries;
-using TaskListApp.Models.User;
+using TaskListApp.Database.Models.User;
 using TaskListApp.Services;
 
 namespace TaskListApp.Handlers

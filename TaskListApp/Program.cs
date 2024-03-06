@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using TaskListApp.Data;
+using TaskListApp.Database.DBConnector;
 using TaskListApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);

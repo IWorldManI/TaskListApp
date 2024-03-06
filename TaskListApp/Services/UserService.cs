@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using TaskListApp.Commands;
-using TaskListApp.Data;
-using TaskListApp.Models.User;
+using TaskListApp.Database.DBConnector;
+using TaskListApp.Database.Models.User;
 using TaskListApp.Queries;
 
 namespace TaskListApp.Services

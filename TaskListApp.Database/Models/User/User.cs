@@ -1,4 +1,4 @@
-﻿namespace TaskListApp.Models.User
+﻿namespace TaskListApp.Database.Models.User
 {
     public class User
     {

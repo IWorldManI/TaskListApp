@@ -1,5 +1,5 @@
 ﻿using TaskListApp.Commands;
-using TaskListApp.Models.User;
+using TaskListApp.Database.Models.User;
 using TaskListApp.Queries;
 
 namespace TaskListApp.Services

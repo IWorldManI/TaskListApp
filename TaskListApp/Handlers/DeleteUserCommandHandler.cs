@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using TaskListApp.Commands;
-using TaskListApp.Models.User;
+using TaskListApp.Database.Models.User;
 using TaskListApp.Services;
 using System.Threading;
 using System.Threading.Tasks;

@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using TaskListApp.Commands;
 using TaskListApp.Controllers;
-using TaskListApp.Models.User;
+using TaskListApp.Database.Models.User;
 using TaskListApp.Queries;
 using Xunit;
 
-namespace TaskListApp.Tests
+namespace TaskListApp.Tests.Controller
 {
     public class ControllerTests
     {

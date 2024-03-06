@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Text.Json.Serialization;
-using TaskListApp.Models.User;
+using TaskListApp.Database.Models.User;
 
 namespace TaskListApp.Commands
 {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TaskListApp.Models.User;
+using TaskListApp.Database.Models.User;
 
-namespace TaskListApp.Data
+namespace TaskListApp.Database.DBConnector
 {
     public class ApplicationDbContext : DbContext
     {

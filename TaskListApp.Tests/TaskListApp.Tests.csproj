@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TaskListApp.Database\TaskListApp.Database.csproj" />
     <ProjectReference Include="..\TaskListApp\TaskListApp.csproj" />
   </ItemGroup>
 
