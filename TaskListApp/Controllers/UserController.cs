@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using TaskListApp.Commands;
-using TaskListApp.Queries;
+using TaskListApp.Commands.UserCommands;
+using TaskListApp.Queries.UserQueries;
 
 namespace TaskListApp.Controllers
 {

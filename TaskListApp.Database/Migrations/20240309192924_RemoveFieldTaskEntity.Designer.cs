@@ -2,18 +2,20 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TaskListApp.Database.DBConnector;
 
 #nullable disable
 
-namespace TaskListApp.Migrations
+namespace TaskListApp.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240309192924_RemoveFieldTaskEntity")]
+    partial class RemoveFieldTaskEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,15 +54,10 @@ namespace TaskListApp.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int?>("TaskItemId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Text")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TaskItemId");
 
                     b.ToTable("Comments");
                 });
@@ -109,12 +106,7 @@ namespace TaskListApp.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("TaskItemId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("TaskItemId");
 
                     b.ToTable("TaskStatusHistories");
                 });
@@ -144,13 +136,6 @@ namespace TaskListApp.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("TaskListApp.Database.Models.TaskModels.Comment", b =>
-                {
-                    b.HasOne("TaskListApp.Database.Models.TaskModels.TaskItem", null)
-                        .WithMany("Comments")
-                        .HasForeignKey("TaskItemId");
-                });
-
             modelBuilder.Entity("TaskListApp.Database.Models.TaskModels.TaskItem", b =>
                 {
                     b.HasOne("TaskListApp.Database.Models.TaskListModel.TaskList", null)
@@ -160,23 +145,9 @@ namespace TaskListApp.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TaskListApp.Database.Models.TaskModels.TaskStatusHistory", b =>
-                {
-                    b.HasOne("TaskListApp.Database.Models.TaskModels.TaskItem", null)
-                        .WithMany("StatusHistory")
-                        .HasForeignKey("TaskItemId");
-                });
-
             modelBuilder.Entity("TaskListApp.Database.Models.TaskListModel.TaskList", b =>
                 {
                     b.Navigation("Tasks");
-                });
-
-            modelBuilder.Entity("TaskListApp.Database.Models.TaskModels.TaskItem", b =>
-                {
-                    b.Navigation("Comments");
-
-                    b.Navigation("StatusHistory");
                 });
 #pragma warning restore 612, 618
         }

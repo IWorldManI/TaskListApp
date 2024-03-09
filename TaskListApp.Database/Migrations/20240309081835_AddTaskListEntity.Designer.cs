@@ -2,18 +2,20 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TaskListApp.Database.DBConnector;
 
 #nullable disable
 
-namespace TaskListApp.Migrations
+namespace TaskListApp.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240309081835_AddTaskListEntity")]
+    partial class AddTaskListEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,26 +24,7 @@ namespace TaskListApp.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("TaskListApp.Database.Models.TaskListModel.TaskList", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TaskLists");
-                });
-
-            modelBuilder.Entity("TaskListApp.Database.Models.TaskModels.Comment", b =>
+            modelBuilder.Entity("TaskListApp.Database.Models.TaskList.Comment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -65,7 +48,7 @@ namespace TaskListApp.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("TaskListApp.Database.Models.TaskModels.TaskItem", b =>
+            modelBuilder.Entity("TaskListApp.Database.Models.TaskList.TaskItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -82,7 +65,7 @@ namespace TaskListApp.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("integer");
 
-                    b.Property<int>("TaskListId")
+                    b.Property<int?>("TaskListId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Title")
@@ -95,7 +78,26 @@ namespace TaskListApp.Migrations
                     b.ToTable("TaskItems");
                 });
 
-            modelBuilder.Entity("TaskListApp.Database.Models.TaskModels.TaskStatusHistory", b =>
+            modelBuilder.Entity("TaskListApp.Database.Models.TaskList.TaskList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TaskLists");
+                });
+
+            modelBuilder.Entity("TaskListApp.Database.Models.TaskList.TaskStatusHistory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -119,7 +121,7 @@ namespace TaskListApp.Migrations
                     b.ToTable("TaskStatusHistories");
                 });
 
-            modelBuilder.Entity("TaskListApp.Database.Models.UserModel.User", b =>
+            modelBuilder.Entity("TaskListApp.Database.Models.User.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -144,39 +146,37 @@ namespace TaskListApp.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("TaskListApp.Database.Models.TaskModels.Comment", b =>
+            modelBuilder.Entity("TaskListApp.Database.Models.TaskList.Comment", b =>
                 {
-                    b.HasOne("TaskListApp.Database.Models.TaskModels.TaskItem", null)
-                        .WithMany("Comments")
+                    b.HasOne("TaskListApp.Database.Models.TaskList.TaskItem", null)
+                        .WithMany("Comment")
                         .HasForeignKey("TaskItemId");
                 });
 
-            modelBuilder.Entity("TaskListApp.Database.Models.TaskModels.TaskItem", b =>
+            modelBuilder.Entity("TaskListApp.Database.Models.TaskList.TaskItem", b =>
                 {
-                    b.HasOne("TaskListApp.Database.Models.TaskListModel.TaskList", null)
+                    b.HasOne("TaskListApp.Database.Models.TaskList.TaskList", null)
                         .WithMany("Tasks")
-                        .HasForeignKey("TaskListId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TaskListId");
                 });
 
-            modelBuilder.Entity("TaskListApp.Database.Models.TaskModels.TaskStatusHistory", b =>
+            modelBuilder.Entity("TaskListApp.Database.Models.TaskList.TaskStatusHistory", b =>
                 {
-                    b.HasOne("TaskListApp.Database.Models.TaskModels.TaskItem", null)
+                    b.HasOne("TaskListApp.Database.Models.TaskList.TaskItem", null)
                         .WithMany("StatusHistory")
                         .HasForeignKey("TaskItemId");
                 });
 
-            modelBuilder.Entity("TaskListApp.Database.Models.TaskListModel.TaskList", b =>
+            modelBuilder.Entity("TaskListApp.Database.Models.TaskList.TaskItem", b =>
                 {
-                    b.Navigation("Tasks");
-                });
-
-            modelBuilder.Entity("TaskListApp.Database.Models.TaskModels.TaskItem", b =>
-                {
-                    b.Navigation("Comments");
+                    b.Navigation("Comment");
 
                     b.Navigation("StatusHistory");
+                });
+
+            modelBuilder.Entity("TaskListApp.Database.Models.TaskList.TaskList", b =>
+                {
+                    b.Navigation("Tasks");
                 });
 #pragma warning restore 612, 618
         }

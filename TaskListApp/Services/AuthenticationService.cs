@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using System.Security.Cryptography;
 using Microsoft.IdentityModel.Tokens;
-using TaskListApp.Database.Models.User;
+using TaskListApp.Database.Models.UserModel;
 
 namespace TaskListApp.Services
 {
