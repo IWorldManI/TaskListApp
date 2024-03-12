@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using TaskListApp.Database.DBConnector;
 using TaskListApp.Services;
+using TaskListApp.Services.CommentService;
 using TaskListApp.Services.TaskListService;
 using TaskListApp.Services.TaskService;
 using TaskListApp.Services.UserService;
@@ -46,6 +47,7 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining(ty
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<ITaskService, TaskService>();
 builder.Services.AddTransient<ITaskListService, TaskListService>();
+builder.Services.AddTransient<ICommentService, CommentService>();
 builder.Services.AddSingleton<AuthenticationService>();
 builder.Services.AddHttpContextAccessor();
 

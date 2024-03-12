@@ -49,7 +49,9 @@ namespace TaskListApp.Services.TaskListService
 
         public async Task<TaskList> GetTaskListByIdAsync(GetTaskListByIdQuery query)
         {
-            var taskList = await _context.TaskLists.Include(t => t.Tasks).FirstOrDefaultAsync(t => t.Id == query.Id);
+            var taskList = await _context.TaskLists
+                .Include(t => t.Tasks)
+                .FirstOrDefaultAsync(t => t.Id == query.Id);
 
             if (taskList == null)
             {

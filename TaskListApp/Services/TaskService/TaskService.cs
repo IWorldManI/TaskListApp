@@ -28,10 +28,18 @@ namespace TaskListApp.Services.TaskService
                     CreatedAt = DateTime.UtcNow,
                     Status = TaskCurrentStatus.Pending,
                     TaskListId = command.TaskListId,
-                    Comments = command.Comments,
                 };
 
                 _context.TaskItems.Add(task);
+
+                var statusHistory = new TaskStatusHistory
+                {
+                    Status = TaskCurrentStatus.Pending,
+                    ChangedAt = DateTime.UtcNow
+                };
+
+                task.StatusHistory.Add(statusHistory);
+
                 await _context.SaveChangesAsync();
 
                 return task;
@@ -48,7 +56,7 @@ namespace TaskListApp.Services.TaskService
 
             if (task == null)
             {
-                throw new Exception("Задача не найдена");
+                throw new Exception("Task not found");
             }
 
             _context.TaskItems.Remove(task);
@@ -60,12 +68,13 @@ namespace TaskListApp.Services.TaskService
         public async Task<TaskItem> GetTaskByIdAsync(GetTaskByIdQuery query)
         {
             var task = await _context.TaskItems
-                .Include(t => t.Comments) // Загружаем комментарии к задаче
+                .Include(t => t.StatusHistory)
+                .Include(t => t.Comments)
                 .FirstOrDefaultAsync(t => t.Id == query.Id);
 
             if (task == null)
             {
-                throw new Exception("Задача не найдена");
+                throw new Exception("Task not found");
             }
 
             return task;
@@ -73,20 +82,34 @@ namespace TaskListApp.Services.TaskService
 
         public async Task<TaskItem> UpdateTaskAsync(UpdateTaskCommand command)
         {
-            var task = await _context.TaskItems.FindAsync(command.Id);
-
-            if (task == null)
+            try
             {
-                throw new Exception("Задача не найдена");
+                var task = await _context.TaskItems
+                    .Include(t => t.StatusHistory)
+                    .Include(t => t.Comments)
+                    .FirstOrDefaultAsync(t => t.Id == command.Id);
+
+                if (task == null)
+                {
+                    throw new Exception("Task not found");
+                }
+
+                task.Status = command.Status;
+
+                task.StatusHistory.Add(new TaskStatusHistory
+                {
+                    Status = command.Status,
+                    ChangedAt = DateTime.UtcNow
+                });
+
+                await _context.SaveChangesAsync();
+
+                return task;
             }
-
-            task.Title = command.Title;
-            task.Description = command.Description;
-            task.Status = command.Status;
-
-            await _context.SaveChangesAsync();
-
-            return task;
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while saving the entity changes.", ex);
+            }
         }
     }
 }
