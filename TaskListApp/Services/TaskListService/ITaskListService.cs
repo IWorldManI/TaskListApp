@@ -11,6 +11,7 @@ namespace TaskListApp.Services.TaskListService
         Task<TaskList> GetTaskListByIdAsync(GetTaskListByIdQuery query);
         Task<TaskList> UpdateTaskListAsync(UpdateTaskListCommand command);
         Task<TaskList> DeleteTaskListAsync(DeleteTaskListCommand command);
-        Task<TaskList> MoveTasksToAnotherList(MoveTasksToAnotherListCommand command);
+        Task<TaskList> MoveTasksToAnotherListAsync(MoveTasksToAnotherListCommand command);
+        Task<TaskList> DeleteNonEmptyListAsync(DeleteNonEmptyListCommand command);
     }
 }

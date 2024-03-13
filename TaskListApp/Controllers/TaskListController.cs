@@ -86,5 +86,19 @@ namespace TaskListApp.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpDelete("{sourceListId}/move-to/{targetListId}")]
+        public async Task<IActionResult> DeleteNonEmptyList(DeleteNonEmptyListCommand command)
+        {
+            try
+            {
+                await _mediator.Send(command);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

@@ -84,7 +84,7 @@ namespace TaskListApp.Services.TaskListService
             return taskList;
         }
 
-        public async Task<TaskList> MoveTasksToAnotherList(MoveTasksToAnotherListCommand command)
+        public async Task<TaskList> MoveTasksToAnotherListAsync(MoveTasksToAnotherListCommand command)
         {
             var sourceList = await _context.TaskLists
                 .Include(list => list.Tasks)
@@ -116,6 +116,43 @@ namespace TaskListApp.Services.TaskListService
                     task.TaskListId = command.TargetListId;
                 }
 
+                await _context.SaveChangesAsync();
+
+                return targetList;
+            }
+
+            return null;
+        }
+        public async Task<TaskList> DeleteNonEmptyListAsync(DeleteNonEmptyListCommand command)
+        {
+            var sourceList = await _context.TaskLists
+                .Include(list => list.Tasks)
+                .FirstOrDefaultAsync(list => list.Id == command.SourceListId);
+
+            if (sourceList == null)
+            {
+                throw new Exception("Source list not found");
+            }
+
+            if (sourceList.Tasks.Any())
+            {
+                var targetList = await _context.TaskLists
+                    .Include(list => list.Tasks)
+                    .FirstOrDefaultAsync(list => list.Id == command.TargetListId);
+
+                if (targetList == null)
+                {
+                    throw new Exception("Target list not found");
+                }
+
+                foreach (var task in sourceList.Tasks)
+                {
+                    task.TaskListId = command.TargetListId;
+                }
+
+                await _context.SaveChangesAsync();
+
+                _context.TaskLists.Remove(sourceList);
                 await _context.SaveChangesAsync();
 
                 return targetList;

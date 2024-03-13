@@ -5,22 +5,22 @@ using TaskListApp.Services.TaskListService;
 
 namespace TaskListApp.Handlers.TaskListHandlers
 {
-    public class MoveTasksToAnotherListCommandHandler : IRequestHandler<MoveTasksToAnotherListCommand, TaskList>
+    public class DeleteNonEmptyListAsyncCommandHandler : IRequestHandler<DeleteNonEmptyListCommand, TaskList>
     {
         private readonly ITaskListService _taskListService;
         private readonly AuthenticationService _authenticationService;
 
-        public MoveTasksToAnotherListCommandHandler(ITaskListService taskListService, AuthenticationService authenticationService)
+        public DeleteNonEmptyListAsyncCommandHandler(ITaskListService taskListService, AuthenticationService authenticationService)
         {
             _taskListService = taskListService;
             _authenticationService = authenticationService;
         }
 
-        public async Task<TaskList> Handle(MoveTasksToAnotherListCommand request, CancellationToken cancellationToken)
+        public async Task<TaskList> Handle(DeleteNonEmptyListCommand request, CancellationToken cancellationToken)
         {
             _authenticationService.EnsureTokenIsValid();
 
-            return await _taskListService.MoveTasksToAnotherListAsync(request);
+            return await _taskListService.DeleteNonEmptyListAsync(request);
         }
     }
 }
