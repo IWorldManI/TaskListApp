@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using TaskListApp.Database.DBConnector;
-using TaskListApp.Services;
+using TaskListApp.Services.AuthentificationService;
 using TaskListApp.Services.CommentService;
 using TaskListApp.Services.TaskListService;
 using TaskListApp.Services.TaskService;

@@ -3,6 +3,7 @@ using TaskListApp.Commands.UserCommands;
 using TaskListApp.Database.DBConnector;
 using TaskListApp.Database.Models.UserModel;
 using TaskListApp.Queries.UserQueries;
+using TaskListApp.Services.AuthentificationService;
 
 namespace TaskListApp.Services.UserService
 {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TaskListApp.Commands.TaskCommands;
 using TaskListApp.Database.DBConnector;
+using TaskListApp.Database.Models.TaskListModel;
 using TaskListApp.Database.Models.TaskModels;
 using TaskListApp.Queries.TaskQueries;
 
@@ -9,12 +10,10 @@ namespace TaskListApp.Services.TaskService
     public class TaskService : ITaskService
     {
         private readonly ApplicationDbContext _context;
-        private readonly AuthenticationService _authenticationService;
 
-        public TaskService(ApplicationDbContext context, AuthenticationService authenticationService)
+        public TaskService(ApplicationDbContext context)
         {
             _context = context;
-            _authenticationService = authenticationService;
         }
 
         public async Task<TaskItem> CreateTaskAsync(CreateTaskCommand command)

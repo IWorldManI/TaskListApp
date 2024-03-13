@@ -72,5 +72,19 @@ namespace TaskListApp.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPut("{sourceListId}/move-tasks-to/{targetListId}")]
+        public async Task<IActionResult> MoveTasksToAnotherList(MoveTasksToAnotherListCommand command)
+        {
+            try
+            {
+                await _mediator.Send(command);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

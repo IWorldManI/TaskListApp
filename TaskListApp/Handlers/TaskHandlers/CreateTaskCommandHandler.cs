@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using TaskListApp.Commands.TaskCommands;
 using TaskListApp.Services.TaskService;
-using TaskListApp.Services;
 using TaskListApp.Database.Models.TaskModels;
+using TaskListApp.Services.AuthentificationService;
 
 namespace TaskListApp.Handlers.TaskHandlers
 {

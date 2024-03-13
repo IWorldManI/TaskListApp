@@ -1,10 +1,8 @@
 ﻿using MediatR;
 using TaskListApp.Database.Models.TaskModels;
 using TaskListApp.Queries.CommentQueries;
-using TaskListApp.Queries.TaskQueries;
-using TaskListApp.Services;
+using TaskListApp.Services.AuthentificationService;
 using TaskListApp.Services.CommentService;
-using TaskListApp.Services.TaskService;
 
 namespace TaskListApp.Handlers.CommentHandlers
 {

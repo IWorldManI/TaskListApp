@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using TaskListApp.Services;
 using TaskListApp.Commands.UserCommands;
 using TaskListApp.Database.Models.UserModel;
 using TaskListApp.Services.UserService;
+using TaskListApp.Services.AuthentificationService;
 
 namespace TaskListApp.Handlers.UserHandlers
 {

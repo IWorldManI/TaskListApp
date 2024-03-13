@@ -8,11 +8,9 @@ namespace TaskListApp.Services.CommentService
     public class CommentService : ICommentService
     {
         private readonly ApplicationDbContext _context;
-        private readonly AuthenticationService _authenticationService;
-        public CommentService(ApplicationDbContext context, AuthenticationService authenticationService)
+        public CommentService(ApplicationDbContext context)
         {
             _context = context;
-            _authenticationService = authenticationService;
         }
         public async Task<Comment> AddCommentAsync(AddCommentCommand command)
         {

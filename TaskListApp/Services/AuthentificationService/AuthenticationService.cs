@@ -4,13 +4,13 @@ using System.Security.Cryptography;
 using Microsoft.IdentityModel.Tokens;
 using TaskListApp.Database.Models.UserModel;
 
-namespace TaskListApp.Services
+namespace TaskListApp.Services.AuthentificationService
 {
     public class AuthenticationService
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AuthenticationService(IHttpContextAccessor httpContextAccessor) 
+        public AuthenticationService(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
         }

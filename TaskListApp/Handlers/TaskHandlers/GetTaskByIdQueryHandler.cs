@@ -2,7 +2,7 @@
 using TaskListApp.Queries.TaskQueries;
 using TaskListApp.Database.Models.TaskModels;
 using TaskListApp.Services.TaskService;
-using TaskListApp.Services;
+using TaskListApp.Services.AuthentificationService;
 
 namespace TaskListApp.Handlers.TaskHandlers
 {

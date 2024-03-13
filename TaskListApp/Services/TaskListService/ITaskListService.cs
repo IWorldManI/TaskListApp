@@ -1,5 +1,6 @@
 ﻿using TaskListApp.Commands.TaskListCommands;
 using TaskListApp.Database.Models.TaskListModel;
+using TaskListApp.Database.Models.TaskModels;
 using TaskListApp.Queries.TaskListQueries;
 
 namespace TaskListApp.Services.TaskListService
@@ -10,5 +11,6 @@ namespace TaskListApp.Services.TaskListService
         Task<TaskList> GetTaskListByIdAsync(GetTaskListByIdQuery query);
         Task<TaskList> UpdateTaskListAsync(UpdateTaskListCommand command);
         Task<TaskList> DeleteTaskListAsync(DeleteTaskListCommand command);
+        Task<TaskList> MoveTasksToAnotherList(MoveTasksToAnotherListCommand command);
     }
 }
