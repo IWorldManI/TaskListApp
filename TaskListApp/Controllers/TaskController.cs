@@ -16,6 +16,7 @@ namespace TaskListApp.Controllers
             _mediator = mediator;
         }
 
+        [CustomAuthorize]
         [HttpPost]
         public async Task<IActionResult> CreateTask(CreateTaskCommand command)
         {
@@ -30,6 +31,7 @@ namespace TaskListApp.Controllers
             }
         }
 
+        [CustomAuthorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTaskById(int id)
         {
@@ -44,6 +46,7 @@ namespace TaskListApp.Controllers
             return Ok(task);
         }
 
+        [CustomAuthorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateTask(int id, UpdateTaskCommand command)
         {
@@ -59,6 +62,7 @@ namespace TaskListApp.Controllers
             }
         }
 
+        [CustomAuthorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTask(int id)
         {

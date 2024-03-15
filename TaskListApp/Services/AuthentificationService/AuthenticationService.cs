@@ -41,10 +41,11 @@ namespace TaskListApp.Services.AuthentificationService
 
         public void EnsureTokenIsValid()
         {
+            // Simple 
             var token = _httpContextAccessor.HttpContext?.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
             if (string.IsNullOrEmpty(token))
             {
-                throw new Exception("Требуется аутентификация");
+                throw new Exception("Authentication required");
             }
         }
     }

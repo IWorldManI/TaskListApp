@@ -43,7 +43,8 @@ namespace TaskListApp.Controllers
                 return Unauthorized(ex.Message);
             }
         }
-        // claim
+
+        [CustomAuthorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById(int id)
         {
@@ -58,6 +59,7 @@ namespace TaskListApp.Controllers
             return Ok(user);
         }
 
+        [CustomAuthorize]
         [HttpGet]
         public async Task<IActionResult> GetUsers([FromQuery] GetUsersQuery query)
         {
@@ -65,6 +67,7 @@ namespace TaskListApp.Controllers
             return Ok(users);
         }
 
+        [CustomAuthorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, UpdateUserCommand command)
         {
@@ -80,6 +83,7 @@ namespace TaskListApp.Controllers
             }
         }
 
+        [CustomAuthorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {

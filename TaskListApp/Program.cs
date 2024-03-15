@@ -58,7 +58,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-Console.WriteLine(DateTime.Now + " / " + DateTime.UtcNow);
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

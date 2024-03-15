@@ -12,8 +12,8 @@ using TaskListApp.Database.DBConnector;
 namespace TaskListApp.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240309194052_AddFieldsToTaskItem")]
-    partial class AddFieldsToTaskItem
+    [Migration("20240315080526_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,7 +54,7 @@ namespace TaskListApp.Database.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int?>("TaskItemId")
+                    b.Property<int>("TaskItemId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Text")
@@ -150,7 +150,9 @@ namespace TaskListApp.Database.Migrations
                 {
                     b.HasOne("TaskListApp.Database.Models.TaskModels.TaskItem", null)
                         .WithMany("Comments")
-                        .HasForeignKey("TaskItemId");
+                        .HasForeignKey("TaskItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("TaskListApp.Database.Models.TaskModels.TaskItem", b =>

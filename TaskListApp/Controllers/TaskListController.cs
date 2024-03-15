@@ -15,6 +15,7 @@ namespace TaskListApp.Controllers
             _mediator = mediator;
         }
 
+        [CustomAuthorize]
         [HttpPost]
         public async Task<IActionResult> CreateTaskList(CreateTaskListCommand command)
         {
@@ -29,6 +30,7 @@ namespace TaskListApp.Controllers
             }
         }
 
+        [CustomAuthorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTaskListById(int id)
         {
@@ -43,6 +45,7 @@ namespace TaskListApp.Controllers
             return Ok(taskList);
         }
 
+        [CustomAuthorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateTaskList(int id, UpdateTaskListCommand command)
         {
@@ -58,6 +61,22 @@ namespace TaskListApp.Controllers
             }
         }
 
+        [CustomAuthorize]
+        [HttpPut("sourceListId/move-tasks-to/targetListId")]
+        public async Task<IActionResult> MoveTasksToAnotherList(MoveTasksToAnotherListCommand command)
+        {
+            try
+            {
+                var targetListContent = await _mediator.Send(command);
+                return Ok(targetListContent);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [CustomAuthorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTaskList(int id)
         {
@@ -73,21 +92,8 @@ namespace TaskListApp.Controllers
             }
         }
 
-        [HttpPut("{sourceListId}/move-tasks-to/{targetListId}")]
-        public async Task<IActionResult> MoveTasksToAnotherList(MoveTasksToAnotherListCommand command)
-        {
-            try
-            {
-                await _mediator.Send(command);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpDelete("{sourceListId}/move-to/{targetListId}")]
+        [CustomAuthorize]
+        [HttpDelete("sourceListId/move-to/targetListId")]
         public async Task<IActionResult> DeleteNonEmptyList(DeleteNonEmptyListCommand command)
         {
             try

@@ -8,7 +8,7 @@ using TaskListApp.Database.DBConnector;
 
 #nullable disable
 
-namespace TaskListApp.Migrations
+namespace TaskListApp.Database.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -52,7 +52,7 @@ namespace TaskListApp.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int?>("TaskItemId")
+                    b.Property<int>("TaskItemId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Text")
@@ -148,7 +148,9 @@ namespace TaskListApp.Migrations
                 {
                     b.HasOne("TaskListApp.Database.Models.TaskModels.TaskItem", null)
                         .WithMany("Comments")
-                        .HasForeignKey("TaskItemId");
+                        .HasForeignKey("TaskItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("TaskListApp.Database.Models.TaskModels.TaskItem", b =>
