@@ -1,7 +1,7 @@
 ﻿using FluentValidation.Results;
 using TaskListApp.Commands.UserCommands;
 
-namespace TaskListApp.Validator
+namespace TaskListApp.Services.ValidationService
 {
     public class ValidationService : IValidationService
     {

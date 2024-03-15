@@ -6,7 +6,7 @@ using TaskListApp.Queries.UserQueries;
 using TaskListApp.Services.AuthentificationService;
 using FluentValidation.Results;
 using FluentValidation;
-using TaskListApp.Validator;
+using TaskListApp.Services.ValidationService;
 
 namespace TaskListApp.Services.UserService
 {
