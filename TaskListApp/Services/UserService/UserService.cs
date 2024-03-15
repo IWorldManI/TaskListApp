@@ -4,6 +4,9 @@ using TaskListApp.Database.DBConnector;
 using TaskListApp.Database.Models.UserModel;
 using TaskListApp.Queries.UserQueries;
 using TaskListApp.Services.AuthentificationService;
+using FluentValidation.Results;
+using FluentValidation;
+using TaskListApp.Validator;
 
 namespace TaskListApp.Services.UserService
 {
@@ -11,15 +14,23 @@ namespace TaskListApp.Services.UserService
     {
         private readonly ApplicationDbContext _context;
         private readonly AuthenticationService _authenticationService;
+        private readonly IValidationService _validationService;
 
-        public UserService(ApplicationDbContext context, AuthenticationService authenticationService)
+        public UserService(ApplicationDbContext context, AuthenticationService authenticationService, IValidationService validationService)
         {
             _context = context;
             _authenticationService = authenticationService;
+            _validationService = validationService;
         }
 
         public async Task<User> RegisterAsync(RegisterUserCommand command)
         {
+            ValidationResult validationResult = _validationService.ValidateRegisterUser(command);
+            if (!validationResult.IsValid)
+            {
+                throw new ValidationException(validationResult.Errors);
+            }
+
             var user = new User
             {
                 Name = command.Name,

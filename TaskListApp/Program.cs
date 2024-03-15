@@ -1,11 +1,14 @@
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using TaskListApp.Commands.UserCommands;
 using TaskListApp.Database.DBConnector;
 using TaskListApp.Services.AuthentificationService;
 using TaskListApp.Services.CommentService;
 using TaskListApp.Services.TaskListService;
 using TaskListApp.Services.TaskService;
 using TaskListApp.Services.UserService;
+using TaskListApp.Validator;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,8 +51,11 @@ builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<ITaskService, TaskService>();
 builder.Services.AddTransient<ITaskListService, TaskListService>();
 builder.Services.AddTransient<ICommentService, CommentService>();
+builder.Services.AddTransient<IValidationService, ValidationService>();
 builder.Services.AddSingleton<AuthenticationService>();
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddTransient<IValidator<RegisterUserCommand>, RegisterUserCommandValidator>();
 
 var app = builder.Build();
 

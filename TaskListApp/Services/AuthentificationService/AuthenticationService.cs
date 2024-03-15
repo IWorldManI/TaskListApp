@@ -39,9 +39,9 @@ namespace TaskListApp.Services.AuthentificationService
             return tokenString;
         }
 
+        [Obsolete("Method is a placeholder")]
         public void EnsureTokenIsValid()
         {
-            // Simple 
             var token = _httpContextAccessor.HttpContext?.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
             if (string.IsNullOrEmpty(token))
             {
