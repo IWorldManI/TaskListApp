@@ -1,3 +1,6 @@
-$context = "ApplicationDbContext"
+$scriptRoot = Split-Path -Parent $MyInvocation.MyCommand.Definition
+$projectPath = Join-Path -Path $scriptRoot -ChildPath "..\..\..\TaskListApp\TaskListApp.Database"
 
-dotnet ef migrations add InitialCreate --context $context --startup-project C:\Users\mmari\source\repos\TaskListApp\TaskListApp.Database --project C:\Users\mmari\source\repos\TaskListApp\TaskListApp.Database --output-dir C:\Users\mmari\source\repos\TaskListApp\TaskListApp.Database\Migrations -v
+cd $projectPath
+
+dotnet ef migrations add InitialCreate --context ApplicationDbContext --startup-project $projectPath --project $projectPath --output-dir "$projectPath\Migrations" -v

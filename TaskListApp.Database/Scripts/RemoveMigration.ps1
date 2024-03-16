@@ -1,6 +1,8 @@
-$StartupProjectPath = "C:\Users\mmari\source\repos\TaskListApp\TaskListApp.Database"
-$Context = "ApplicationDbContext"
+$scriptRoot = Split-Path -Parent $MyInvocation.MyCommand.Definition
+$projectPath = Join-Path -Path $scriptRoot -ChildPath "..\..\..\TaskListApp\TaskListApp.Database"
 
-cd $StartupProjectPath
+$context = "ApplicationDbContext"
+
+cd $projectPath
 
 dotnet ef migrations remove --context $Context
